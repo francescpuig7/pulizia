@@ -40,14 +40,14 @@ public class MainActivity extends AppCompatActivity {
         calendarView2.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                List<String> adata = getDate(year, month, dayOfMonth);
+                List<String> adata = getInfo(year, month, dayOfMonth);
                 String message = "";
                 for (int i=0; i<adata.size(); i++){
                     String m = adata.get(i);
                     message = message.concat(m);
                 }
 
-                Snackbar.make(view, message, 25000).show();
+                Snackbar.make(view, message, Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public List getDate(int year, int month, int day){
+    public List getInfo(int year, int month, int day){
         List<String> users = new ArrayList<>();
         String year_ = Integer.toString(year);
         String month_ = Integer.toString(month);
@@ -85,13 +85,31 @@ public class MainActivity extends AppCompatActivity {
         ymd = ymd.concat(year_);
         ymd = ymd.concat(month_);
         ymd = ymd.concat(day_);
-
-        //String tsd = new SimpleDateFormat("yyyyMMdd").format(ymd);
-        users.add(ymd);
-        users.add(":    ");
-        users.add("Victor: Menjador,  ");
-        users.add("Torne: Cuina,  ");
-        users.add("Puig: Basura");
+        int[] week = new int[]{1,2,3};
+        if (day <= 7){
+            int config = week[0];
+            users.add(ymd);
+            users.add(":    ");
+            users.add("Victor: Basura,  ");
+            users.add("Torne: Menjador,  ");
+            users.add("Puig: Cuina");
+        }
+        else if (day > 7 && day <= 14){
+            int config = week[1];
+            users.add(ymd);
+            users.add(":    ");
+            users.add("Victor: Menjador,  ");
+            users.add("Torne: Cuina,  ");
+            users.add("Puig: Basura");
+        }
+        else{
+            int config = week[2];
+            users.add(ymd);
+            users.add(":    ");
+            users.add("Victor: Cuina,  ");
+            users.add("Torne: Basura,  ");
+            users.add("Puig: Menjador");
+        }
 
         return users;
     }
